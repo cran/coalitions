@@ -1,7 +1,7 @@
 Package: coalitions
 Type: Package
 Title: Coalition Probabilities in Multi-Party Democracies
-Version: 0.6.2
+Version: 0.6.4
 Authors@R: c(
     person("Andreas", "Bender", , "andreas.bender@stat.uni-muenchen.de", role = c("aut", "cre"), comment=c(ORCID = "0000-0001-5628-8611")),
     person("Alexander", "Bauer", , "alexander.bauer@stat.uni-muenchen.de", role=c("aut"), comment=c(ORCID = "0000-0003-3495-5131"))
@@ -24,8 +24,8 @@ RoxygenNote: 6.0.1
 VignetteBuilder: knitr
 LazyData: true
 NeedsCompilation: no
-Packaged: 2018-03-14 17:57:10 UTC; abhs
+Packaged: 2018-08-27 15:04:07 UTC; bender
 Author: Andreas Bender [aut, cre] (<https://orcid.org/0000-0001-5628-8611>),
   Alexander Bauer [aut] (<https://orcid.org/0000-0003-3495-5131>)
 Repository: CRAN
-Date/Publication: 2018-03-15 09:25:57 UTC
+Date/Publication: 2018-08-27 15:24:24 UTC
