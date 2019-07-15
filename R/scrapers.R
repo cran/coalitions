@@ -26,7 +26,8 @@ exctract_num_befragte <- function(x) {
 sanitize_befragte <- function(x) {
 
   x <- gsub(".*\u2022", "", x)
-  x <- substr(x, 2, 6)
+  x <- gsub(" ", "", x)
+  x <- substr(x, 1, 5)
   x <- map_dbl(x, ~if_else(grepl(".", .x, fixed = TRUE),
     extract_num(.x, decimal = FALSE), extract_num(substr(.x, 1, 3))))
 
@@ -80,7 +81,7 @@ sanitize_colnames <- function(df) {
 
 }
 
-#' Scrape surveys from wahlrecht.de
+#' Scrape surveys for German general election
 #'
 #' Scrapes survey tables and performs sanitation to output tidy data
 #' @rdname scrape
@@ -251,10 +252,7 @@ scrape_by <- function(
 
 }
 
-#' Obtain (nested) Bavaria surveys object
-#'
-#' Scrapes data from \url{wahlrecht.de} and performs some sanitizing.
-#'
+
 #' @rdname get_surveys
 #' @importFrom tidyr nest
 #' @export
@@ -332,10 +330,7 @@ scrape_ltw <- function(
 
 }
 
-#' Obtain (nested) Lower Saxony surveys object
-#'
-#' Scrapes data from \url{wahlrecht.de} and performs some sanitizing.
-#'
+
 #' @rdname get_surveys
 #' @importFrom tidyr nest
 #' @export
@@ -348,10 +343,52 @@ get_surveys_nds <- function() {
 
 }
 
+
+#' @rdname get_surveys
+#' @inherit get_surveys
+#' @export
+get_surveys_saxony <- function() {
+
+  saxony <- scrape_ltw(
+    "https://www.wahlrecht.de/umfragen/landtage/sachsen.htm",
+    ind_row_remove = -1)
+  saxony %>% collapse_parties() %>%
+    nest(-one_of("pollster"), .key = "surveys")
+
+}
+
+#' @rdname get_surveys
+#' @inherit get_surveys
+#' @export
+get_surveys_brb <- function() {
+
+  brb <- scrape_ltw("https://www.wahlrecht.de/umfragen/landtage/brandenburg.htm")
+  brb %>% collapse_parties() %>%
+    nest(-one_of("pollster"), .key = "surveys")
+
+}
+
+#' @rdname get_surveys
+#' @inherit get_surveys
+#' @export
+get_surveys_thuringen <- function() {
+
+  thuringen <- scrape_ltw(
+    "https://www.wahlrecht.de/umfragen/landtage/thueringen.htm",
+    ind_row_remove = -1)
+  thuringen %>% collapse_parties() %>%
+    nest(-one_of("pollster"), .key = "surveys")
+
+}
+
+
 #' Import Austrian survey results
 #'
-#' Reads JSON file from neuwal.com
-#' @param address URL of the JSON file
+#' Reads JSON file from neuwal.com and performs some preprocessing to bring
+#' data into standardized format. Returns a nested tibble.
+#'
+#'
+#' @param address URL of the JSON file.
 #' @import dplyr
 #' @importFrom tidyr nest unnest
 #' @importFrom purrr map map_dfr flatten_dfc
@@ -363,31 +400,44 @@ get_surveys_nds <- function() {
 #' @importFrom stringr str_replace
 #' @export
 scrape_austria <- function(
-  address = "https://neuwal.com/wahlumfragen/openwal/neuwal-openwal.json") {
+  address = "https://neuwal.com/wahlumfragen/data/neuwal-wahlumfragen-user.json") {
 
   aut_list <- fromJSON(getURL(address) %>%
-                           str_replace('\\"\\"(.*)\\"\\",', "\"'\\1'\",")) # fix for double double-quote bug
-  out_df   <- as_tibble(aut_list) %>%
-    rename(survey = "results") %>%
-    select(one_of(c("institute", "date", "n",  "survey"))) %>%
+    str_replace('\\"\\"(.*)\\"\\",', "\"'\\1'\",")) # fix for double double-quote bug
+  out_df <- as_tibble(aut_list[[1]]) %>%
+    filter(.data$regionID == 1)
+  party <- out_df %>%
+    select(one_of("id"), contains("Party")) %>%
+    gather("key", "party", contains("Party")) %>%
+    arrange(desc(.data$id)) %>%
+    select(-.data$key)
+  party <- party %>% nest(.data$party) %>%
+    mutate(data = map(.data$data, ~rbind(.x, data.frame(party = "Others")))) %>%
+    unnest()
+  percent <- out_df %>%
+    select(one_of(c("id", "n")), contains("Value")) %>%
+    gather("key", "percent", contains("Value")) %>%
+    arrange(desc(.data$id)) %>%
+    mutate(percent = as.numeric(.data$percent)) %>%
+    select(-one_of("key"))
+  percent <- percent %>% nest(.data$percent) %>%
+    mutate(data = map(.data$data, ~rbind(.x, data.frame(percent = 100 - sum(.x$percent))))) %>%
     unnest() %>%
-    rename(pollster = "institute", respondents = "n", party = "partyName",
-      percent = "percentage") %>%
-    mutate(
-      votes = .data$respondents * .data$percent / 100,
-      date  = dmy(.data$date)) %>%
-    mutate(
-      start = .data$date,
-      end   = .data$date,
-      party = fct_collapse(.data$party, others = c("? ", "So"))) %>%
-    mutate(party = as.character(.data$party)) %>%
-    group_by(UQS(
-      syms(c("pollster", "respondents", "date", "start", "end", "party")))) %>%
-    summarize(
-      percent = sum(.data$percent),
-      votes   = sum(.data$votes)) %>%
-    ungroup() %>%
-    nest(one_of(c("party", "percent", "votes")), .key = "survey") %>%
-    nest(-one_of("pollster"), .key = "surveys")
+    mutate(votes   = .data$n * .data$percent / 100) %>%
+    select(-n)
+  pp <- cbind(party, percent[, -1]) %>%
+    nest(-.data$id, .key = "survey")
 
-}
+  out_df <- out_df %>%
+    select(one_of(c("id", "institut", "n", "datum"))) %>%
+    rename(pollster = "institut", date = "datum", respondents = "n")
+  out_df <- out_df %>% left_join(pp)
+  out_df %>%
+    mutate(
+      date  = as.Date(.data$date),
+      start = .data$date,
+      end   = .data$date) %>%
+    select(one_of(c("pollster", "date", "start", "end", "respondents", "survey"))) %>%
+    nest(-.data$pollster, .key = "surveys")
+
+  }
