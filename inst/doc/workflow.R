@@ -1,4 +1,4 @@
-## ---- echo = FALSE-------------------------------------------------------
+## ---- echo = FALSE------------------------------------------------------------
 library(knitr)
 opts_chunk$set(
   fig.align  = "center",
@@ -7,39 +7,39 @@ opts_chunk$set(
   warning    = FALSE,
   crop       = TRUE)
 
-## ----message=FALSE, warning=FALSE----------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 library(tidyr)
 library(purrr)
 library(dplyr)
 library(coalitions)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 # one line per survey (party information in wide format)
 emnid <- scrape_wahlrecht() %>% slice(1:6)
 emnid %>% select(-start, -end)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 elong <- collapse_parties(emnid)
 head(elong)
-elong %>% slice(1) %>% select(survey) %>% unnest()
+elong %>% slice(1) %>% select(survey) %>% unnest("survey")
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 set.seed(1)     # for reproducibility
 
 elong <- elong %>%
   mutate(draws = map(survey, draw_from_posterior, nsim=10, correction=0.005))
 elong %>% select(date, survey, draws)
 # each row is one election simulation
-elong %>% slice(1) %>% select(draws) %>% unnest()
+elong %>% slice(1) %>% select(draws) %>% unnest("draws")
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 elong <- elong %>%
   mutate(seats = map2(draws, survey, get_seats, distrib.fun=sls))
 elong %>% select(date, survey, draws, seats)
 ## sim column indicates simulated elections (rows in draws column)
-elong %>% slice(1) %>% select(seats) %>% unnest()
+elong %>% slice(1) %>% select(seats) %>% unnest("seats")
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 coalitions <- list(
 	c("cdu"),
 	c("cdu", "fdp"),
@@ -53,21 +53,21 @@ coalitions <- list(
 
 
 elong <- elong %>%
-	mutate(majorities = map(seats, have_majority, coalitions=coalitions))
+	mutate(majorities = map(seats, have_majority, coalitions = coalitions))
 elong %>% select(date, draws, seats, majorities)
 # The majorities table for each date will have 1 row per simulation
 # and one column per coalition
-elong %>% slice(1) %>% select(majorities) %>% unnest()
+elong %>% slice(1) %>% select(majorities) %>% unnest("majorities")
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 elong <- elong %>%
 	mutate(
 		probabilities = map(majorities, calculate_probs, coalitions=coalitions))
 elong %>% select(date, majorities, probabilities)
 # one row per coalition
-elong %>% slice(1) %>% select(probabilities) %>% unnest()
+elong %>% slice(1) %>% select(probabilities) %>% unnest("probabilities")
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 elong <- collapse_parties(emnid)
-elong %>% get_probabilities(., nsim=10) %>% unnest()
+elong %>% get_probabilities(., nsim=10) %>% unnest("probabilities")
 
