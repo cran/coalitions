@@ -185,6 +185,19 @@ scrape_wahlrecht <- function(
 #' Currently \code{"DE"} (Germany) and \code{"AT"} (Austria) are supported.
 #' @import dplyr
 #' @importFrom purrr map
+#' @return Nested tibble. When fully unnested, the dataset contains the following
+#' columns:
+#' \describe{
+#'   \item{pollster}{Character name of the polling institute.}
+#'   \item{date}{Publication date of the poll.}
+#'   \item{start, end}{Start and end date of the field period, i.e. the dates
+#'   during which the poll was conducted.}
+#'   \item{respondents}{Number of respondents in the poll.}
+#'   \item{party}{Character name of an individual party.}
+#'   \item{percent}{Percentage of respondents that chose the party. Given in
+#'   percentage points, i.e. \code{38\%} is given as \code{38}.}
+#'   \item{votes}{Number of respondents that chose the party.}
+#' }
 #' @examples
 #' \dontrun{
 #' library(coalitions)
@@ -295,7 +308,7 @@ get_surveys_by <- function() {
 #' # Niedersachsen
 #' scrape_ltw() %>% slice(1:5)
 #' # Hessen
-#' scrape_ltw("http://www.wahlrecht.de/umfragen/landtage/hessen.htm", ind_row_remove=-c(1)) %>%
+#' scrape_ltw("https://www.wahlrecht.de/umfragen/landtage/hessen.htm", ind_row_remove=-c(1)) %>%
 #'  slice(1:5)
 #' }
 scrape_ltw <- function(

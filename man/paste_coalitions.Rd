@@ -11,8 +11,7 @@ paste_coalitions(coalitions, collapse = "_")
 be calculated. Each list entry must be a vector of party names. Those names
 need to correspond to the names in \code{majority_df}.}
 
-\item{collapse}{an optional character string to separate the results.  Not
-    \code{\link[base]{NA_character_}}.}
+\item{collapse}{Character string passed to \code{base::paste}.}
 }
 \description{
 Transform list of coalitions to vector by combining party names

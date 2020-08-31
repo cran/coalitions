@@ -1,3 +1,6 @@
+# coalitoins 0.6.15
+- fixes CRAN errors
+
 # coaltions 0.6.12
 - fixes CRAN errors [#119](https://github.com/adibender/coalitions/issues/119) (see also #118)
 - fixes scrapper function for GMS table [#118](https://github.com/adibender/coalitions/issues/118)
@@ -26,9 +29,9 @@
 
 # coalitions 0.6.1
 
-- Minor fixes after [JOSS review](http://joss.theoj.org/), thx to Reviewer
+- Minor fixes after [JOSS review](https://joss.theoj.org/), thx to Reviewer
 [@fsolt](https://github.com/fsolt)
-- Updated homepage (via [`pkgdown`](http://pkgdown.r-lib.org/articles/pkgdown.html) )
+- Updated homepage (via [`pkgdown`](https://pkgdown.r-lib.org/articles/pkgdown.html) )
 - Added current JOSS badge
 
 # coalitions 0.6.0 (2018-03)
