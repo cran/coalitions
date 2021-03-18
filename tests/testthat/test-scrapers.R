@@ -58,7 +58,7 @@ test_that("Federal german scrapers work", {
   expect_equal(nds$respondents, 1001)
 
   surveys_nds <- get_surveys_nds()
-  expect_data_frame(surveys_nds, nrows = 6, ncols = 2)
+  expect_data_frame(surveys_nds, nrows = 7, ncols = 2)
 
   # Hessen
   he <- scrape_ltw(
@@ -67,8 +67,17 @@ test_that("Federal german scrapers work", {
     filter(date <= as.Date("2018-09-07"))
   expect_data_frame(he, nrows = 15, ncols = 12)
   expect_identical(he$respondents[4], 1067)
-  expect_identical(he[he$date == as.Date("2018-09-07"), "others"], 4)
+  expect_identical(he$others[he$date == as.Date("2018-09-07")], 4)
 
+  # Rheinland-Pfalz
+  rp <- scrape_rp() %>%
+    filter(date <= as.Date("2020-12-31") & date >= as.Date("2020-01-01"))
+  expect_data_frame(rp, nrows = 6, ncols = 13)
+  expect_identical(rp$respondents[1], 1002)
+  expect_identical(rp$others[rp$date == as.Date("2020-04-15")], 5)
+
+  surveys_rp <- get_surveys_rp()
+  expect_data_frame(surveys_rp, nrows = 5, ncols = 2)
 })
 
 
