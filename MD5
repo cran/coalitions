@@ -1,7 +1,7 @@
-128c4284954e07c24f1824528f4e7b2c *DESCRIPTION
+dd71ed6a5a8d88ecff8ba445c8b115a4 *DESCRIPTION
 562ada711244aa48594619cbeac147e5 *LICENSE
 2518a2901dd58027f9f302cf1e6d1c94 *NAMESPACE
-6b00d207b7ebbd9fa1aee83f35d2bf05 *NEWS.md
+7f383611300b7a611e0fe86018a81cae *NEWS.md
 c700cb77bc0a3c39939b73832cd343f6 *R/DHondt.R
 de289d12e533f1778f935905d2188af3 *R/as-survey.R
 97eae3ac6412755c94535bb413329521 *R/coalition-probability.R
@@ -13,7 +13,7 @@ b30d88d41fd36422322e90e14200ec59 *R/draw-from-posterior.R
 9b220bd808bd570f3c7f074a5fa5f9a7 *R/pooling.R
 1ed80f677036ea2cfc757ffd7477bcfe *R/prettify.R
 60aa019deac5d24e59a9b56a59c4bbd5 *R/saint-lague-scheppers.R
-adb128a58d452afb0391943028666587 *R/scrapers.R
+4f62b4f83aa2224aa64d6bf030897260 *R/scrapers.R
 5c9c712a60a10dd4e25a181a29a3f1c1 *R/seat-distribution.R
 f0bd31b6e2c0ffcb8b45fbee58c21af3 *R/survey-helpers.R
 d93b8d12a013666789ba8b170b4cb890 *R/sysdata.rda
@@ -65,6 +65,6 @@ a33b0de3a66c471d999c52f44097b5b0 *man/try_readHTML.Rd
 37dfc3dc98e092ab85e264b40612738c *tests/testthat.R
 19e635dae2f8defb179b39cb2437401e *tests/testthat/test-basic-functions.R
 b822f84b9535754b4a0b5a5bee46e35a *tests/testthat/test-pooling.R
-8da5b2ef6daad136c3a9109ea31a56fc *tests/testthat/test-scrapers.R
+c2ed733775f7dfaa240d6664a46b2db2 *tests/testthat/test-scrapers.R
 6df4ec59cb819fef6b22818a82857994 *tests/testthat/test-survey-helpers.R
 b48b0d4c69a24a007677104188b0dab6 *tests/testthat/test-workflow.R
