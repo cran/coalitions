@@ -1,7 +1,7 @@
-dd71ed6a5a8d88ecff8ba445c8b115a4 *DESCRIPTION
+ba2d075cb4a21633f69a4f59de52cf4e *DESCRIPTION
 562ada711244aa48594619cbeac147e5 *LICENSE
 2518a2901dd58027f9f302cf1e6d1c94 *NAMESPACE
-7f383611300b7a611e0fe86018a81cae *NEWS.md
+d9336c074bb8b5424f860ab2655412c2 *NEWS.md
 c700cb77bc0a3c39939b73832cd343f6 *R/DHondt.R
 de289d12e533f1778f935905d2188af3 *R/as-survey.R
 97eae3ac6412755c94535bb413329521 *R/coalition-probability.R
@@ -13,8 +13,8 @@ b30d88d41fd36422322e90e14200ec59 *R/draw-from-posterior.R
 9b220bd808bd570f3c7f074a5fa5f9a7 *R/pooling.R
 1ed80f677036ea2cfc757ffd7477bcfe *R/prettify.R
 60aa019deac5d24e59a9b56a59c4bbd5 *R/saint-lague-scheppers.R
-4f62b4f83aa2224aa64d6bf030897260 *R/scrapers.R
-5c9c712a60a10dd4e25a181a29a3f1c1 *R/seat-distribution.R
+7ecdd7827694367e93b276e60708c3a6 *R/scrapers.R
+f216587dedbd4b2fbed3537cca2bf92a *R/seat-distribution.R
 f0bd31b6e2c0ffcb8b45fbee58c21af3 *R/survey-helpers.R
 d93b8d12a013666789ba8b170b4cb890 *R/sysdata.rda
 65cef5e0674056f6fc07dd2b3ca85c13 *R/utils-pipe.R
@@ -63,7 +63,7 @@ a0237b2c7d94178eebc72cfa79fd1c45 *man/scrape.Rd
 cbb562a9c8dd41c888a0df414b0b86d2 *man/surveys_sample.Rd
 a33b0de3a66c471d999c52f44097b5b0 *man/try_readHTML.Rd
 37dfc3dc98e092ab85e264b40612738c *tests/testthat.R
-19e635dae2f8defb179b39cb2437401e *tests/testthat/test-basic-functions.R
+12374a74d6beda0fe7d82cac8d4e485a *tests/testthat/test-basic-functions.R
 b822f84b9535754b4a0b5a5bee46e35a *tests/testthat/test-pooling.R
 c2ed733775f7dfaa240d6664a46b2db2 *tests/testthat/test-scrapers.R
 6df4ec59cb819fef6b22818a82857994 *tests/testthat/test-survey-helpers.R

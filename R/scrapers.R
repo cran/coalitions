@@ -141,6 +141,27 @@ scrape_wahlrecht <- function(
   atab           <- atab[ind_row_remove, ]
   atab           <- atab[-nrow(atab), ]
   colnames(atab) <- c("Datum", colnames(atab)[-1])
+  
+  if (any(nchar(atab$Sonstige) > 6)) {
+    # correct the 'Sonstige' column if it contains information on
+    # one party + other parties (see issue #138)
+    weird_rows <- which(nchar(atab$Sonstige) > 6)
+    if (length(weird_rows) > 0) {
+      for (row in weird_rows) {
+        entry  <- atab$Sonstige[row] %>% 
+          gsub(pattern = ",", replacement = ".")
+        # include '0' instead of decimal commas s.t. gregexpr correctly finds the beginning of each decimal number
+        entry_gregexpr <- gsub(atab$Sonstige[row], pattern = ",", replacement = ".")
+        shares <- entry_gregexpr %>% 
+          gregexpr("[[:digit:]]+", .) %>% 
+          regmatches(entry, .) %>% 
+          unlist() %>% 
+          as.numeric()
+        atab$Sonstige[row] <- paste(sum(shares), "%")
+      }
+    }
+  }
+  
   ind.empty      <- sapply(atab, function(z) { all(z == "") | all(is.na(z)) } ) |
     sapply(colnames(atab), function(z) z == "") |
     sapply(colnames(atab), function(z) is.na(z))
