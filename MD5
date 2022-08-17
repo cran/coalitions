@@ -1,7 +1,7 @@
-ba2d075cb4a21633f69a4f59de52cf4e *DESCRIPTION
+6d563acf218b4e21caa0986024a860ec *DESCRIPTION
 562ada711244aa48594619cbeac147e5 *LICENSE
 2518a2901dd58027f9f302cf1e6d1c94 *NAMESPACE
-d9336c074bb8b5424f860ab2655412c2 *NEWS.md
+5a3ac2c5866dfa8f2bef6463025c70a0 *NEWS.md
 c700cb77bc0a3c39939b73832cd343f6 *R/DHondt.R
 de289d12e533f1778f935905d2188af3 *R/as-survey.R
 97eae3ac6412755c94535bb413329521 *R/coalition-probability.R
@@ -35,12 +35,12 @@ c3e7a7ebcef2b854e2541904baa8df4a *man/effective_samplesize.Rd
 2a5947751ed6115f2770c3950a0b508e *man/figures/logo.png
 ae8cc5da74bcfc195e8193b8d8d1d209 *man/filter_superior.Rd
 ec83672b2a0b371cca411b50e784958e *man/get_eligible.Rd
-1c4d8d39d62dc6e5f05a8341f8bcd730 *man/get_entryprobability.Rd
+25342e9dc3f75f37ff4f6c594f47e0cf *man/get_entryprobability.Rd
 86e1e9dce09070fe7aa38d0e37da2395 *man/get_meta.Rd
 a30756fea6aff4dbc87f415c625b72f5 *man/get_n.Rd
 0c9869e6a18ec35e2a24fc0ea6919130 *man/get_pooled.Rd
 411a253f0fcba838be0c809ab9af6a9a *man/get_probabilities.Rd
-87783dc3b3247702ee60e44ece9d58c7 *man/get_seats.Rd
+1cbb83428d56f3f23da55f44ada07405 *man/get_seats.Rd
 8b7d5a56725022790b96346368e38079 *man/get_superior.Rd
 6f6ca537dcdee5e8779c0a21c0bb636f *man/get_surveys.Rd
 5b5cc4289b27258e2165a49823414e15 *man/gg_survey.Rd
@@ -54,7 +54,7 @@ b7f199c89d98f5baed05aa59ab04e2a6 *man/hare_niemeyer.Rd
 069a86a47c487e9d16ce76bdbe7a148b *man/pool_austria.Rd
 93420ae257fb18b5488d4c55a19481d8 *man/pool_surveys.Rd
 d13917b0b1901be3f8b011a82838e9fd *man/prettify.Rd
-8103728cb0efa384e3efea511dc1a3c1 *man/redistribute.Rd
+c82481323835ae666e5ce001222ac6a0 *man/redistribute.Rd
 832209b965fca4d58dcbc5577be1a673 *man/sanitize_colnames.Rd
 44c795cb6443d80d3b08d51ed0df9e73 *man/sanitize_strings.Rd
 a0237b2c7d94178eebc72cfa79fd1c45 *man/scrape.Rd
@@ -67,4 +67,4 @@ a33b0de3a66c471d999c52f44097b5b0 *man/try_readHTML.Rd
 b822f84b9535754b4a0b5a5bee46e35a *tests/testthat/test-pooling.R
 c2ed733775f7dfaa240d6664a46b2db2 *tests/testthat/test-scrapers.R
 6df4ec59cb819fef6b22818a82857994 *tests/testthat/test-survey-helpers.R
-b48b0d4c69a24a007677104188b0dab6 *tests/testthat/test-workflow.R
+345bba74237587abd8cd131a3386a587 *tests/testthat/test-workflow.R
