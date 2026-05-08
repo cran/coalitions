@@ -2,6 +2,8 @@
 #'
 #' @param surveys_df A data frame containing surveys from different survey
 #' institutes as returned by \code{\link{get_surveys}}.
+#' @return A tibble with columns \code{pollster}, \code{date}, \code{start},
+#' \code{end}, and \code{respondents} (one row per survey).
 #' @importFrom dplyr select
 #' @importFrom tidyr unnest
 #' @keywords internal
@@ -10,7 +12,7 @@ get_meta <- function(surveys_df) {
 
   surveys_df %>%
     unnest("surveys") %>%
-    select(one_of(c("pollster", "date", "start", "end", "respondents")))
+    select(any_of(c("pollster", "date", "start", "end", "respondents")))
 
 }
 
@@ -23,33 +25,32 @@ get_meta <- function(surveys_df) {
 #' @param surveys A data frame with one survey per row.
 #' @inheritParams scrape_wahlrecht
 #' @import checkmate magrittr dplyr
-#' @importFrom tidyr gather nest
-#' @importFrom purrr compose
+#' @importFrom tidyr pivot_longer nest
 #' @return Data frame in long format
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' emnid <- scrape_wahlrecht()
 #' emnid.long <- collapse_parties(emnid)
 #' }
 #' @export
 collapse_parties <- function(
   surveys,
-  parties = c("cdu", "spd", "greens", "fdp", "left", "pirates", "fw", "afd",
+  parties = c("cdu", "spd", "greens", "fdp", "left", "pirates", "fw", "afd", "bsw",
     "others")) {
 
   assert_data_frame(surveys, min.rows = 1, min.cols = 3)
   assert_character(parties, any.missing = FALSE, min.len = 2, unique = TRUE)
 
-  surveys <- surveys %>% select_if(compose("!", all, is.na))
+  surveys <- surveys %>% select(where(~!all(is.na(.x))))
   av.parties <- colnames(surveys)[colnames(surveys) %in% parties]
-  surveys <- gather(surveys, "party", "percent",
-      intersect(names(surveys), av.parties)) %>%
+  surveys <- pivot_longer(surveys, cols = any_of(av.parties),
+      names_to = "party", values_to = "percent") %>%
     arrange(desc(date))
 
   surveys %>% mutate(votes = .data$percent / 100 * .data$respondents) %>%
     filter(!is.na(.data$percent)) %>%
     as_tibble() %>%
-    nest(survey = one_of(c("party", "percent", "votes")))
+    nest(survey = any_of(c("party", "percent", "votes")))
 
 }
 

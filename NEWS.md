@@ -1,3 +1,29 @@
+# coalitions 0.6.27
+- `dHondt()` and `sls()` now return a `ties` attribute (`TRUE`/`FALSE`) indicating
+  whether the seat distribution is non-unique due to tied quotients at the last seat.
+  When `ties = TRUE`, the result was resolved randomly and re-running may yield a
+  different but equally valid distribution (see issue #131).
+- Added `\value` tag to `pipe.Rd`
+- Replaced remaining `\dontrun{}` with `\donttest{}` in `get_surveys()` and `scrape_ltw()` examples
+- Removed commented-out code from `get_surveys()` example
+
+# coalitions 0.6.26
+- Added `\value` documentation to all functions missing return value descriptions
+- Updated `inst/CITATION` to use `bibentry()` / `c(person())` (replacing deprecated `citEntry()` / `personList()`)
+- Fixed `scrape_wahlrecht()` example to not use internal `:::` accessor
+- Replaced `\dontrun{}` with `\donttest{}` in examples requiring internet access
+- Fixed redirected and broken URLs in README
+
+# coalitions 0.6.25
+- Removed deprecated `scrape_austria()` function and Austria-related dependencies (RCurl, jsonlite)
+- Replaced deprecated `one_of()` with `any_of()` throughout
+- Replaced deprecated `gather()` with `pivot_longer()`
+- Replaced deprecated `mutate_at()`, `summarize_at()`, `filter_at()` with `across()`/`if_all()`
+- Replaced deprecated `select_if()` with `where()`
+- Fixed documentation typo in `get_superior()` (`stirng` -> `string`)
+- Fixed diagnostic vignette (`flatten_df()` -> `bind_rows()`)
+- Fixed pooling vignette (bare `unnest()` -> explicit column spec)
+
 # coalitions 0.6.24
 Minor test fix
 

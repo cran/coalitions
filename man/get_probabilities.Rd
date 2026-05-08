@@ -38,6 +38,11 @@ from U(-1*correction, 1*correction). This can be used to introduce extra
 variation which might be useful due to rounding errors from reported survey
 results (or add an additional source of variation in general).}
 }
+\value{
+A tibble with the same rows as \code{x} (one per survey) and an
+additional list-column \code{probabilities} containing a data frame of
+coalition names and their probabilities (0--100) for each survey.
+}
 \description{
 Given a table with simulations in the rows and coalitions in the columns,
 this function returns the coalition probabilities for a specified coalition,
@@ -47,7 +52,7 @@ by default excluding superior coalitions first
 library(coalitions)
 library(dplyr)
 # get the latest survey for a sample of German federal election polls
-surveys <- get_latest(surveys_sample)
+surveys <- get_latest(surveys_sample) \%>\% ungroup() \%>\% slice(1)
 # calculate probabilities for two coalitions
 probs <- get_probabilities(surveys,
                            coalitions = list(c("cdu", "fdp"),

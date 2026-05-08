@@ -20,6 +20,10 @@ explicitly are subsumed.}
 \item{epsilon}{Percentages should add up to 1. If they do not, within accuracy
 of \code{epsilon}, an error is thrown.}
 }
+\value{
+A data frame with the same structure as \code{survey} but with
+parties below the hurdle removed and vote percentages renormalized.
+}
 \description{
 Calculate percentage of votes/seats after excluding parties with
 \code{votes < hurdle}
@@ -28,7 +32,7 @@ Calculate percentage of votes/seats after excluding parties with
 library(coalitions)
 library(dplyr)
 # get the latest survey for a sample of German federal election polls
-surveys <- get_latest(surveys_sample)
+surveys <- get_latest(surveys_sample) \%>\% ungroup() \%>\% slice(1)
 # redistribute the shares of 'others' parties and parties with a share of under 5\\%
 surveys <- surveys \%>\% mutate(survey_redist = purrr::map(survey, redistribute))
 surveys$survey # results before redistribution

@@ -6,7 +6,8 @@
 \usage{
 collapse_parties(
   surveys,
-  parties = c("cdu", "spd", "greens", "fdp", "left", "pirates", "fw", "afd", "others")
+  parties = c("cdu", "spd", "greens", "fdp", "left", "pirates", "fw", "afd", "bsw",
+    "others")
 )
 }
 \arguments{
@@ -22,7 +23,7 @@ Given a data frame containing multiple surveys (one row per survey), transforms
 the data into long format with one row per party.
 }
 \examples{
-\dontrun{
+\donttest{
 emnid <- scrape_wahlrecht()
 emnid.long <- collapse_parties(emnid)
 }

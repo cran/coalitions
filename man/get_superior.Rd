@@ -7,12 +7,16 @@
 get_superior(string, pattern = "_", collapse = "_")
 }
 \arguments{
+\item{string}{A character.}
+
 \item{pattern}{Pattern to look for (regular expression).}
 
 \item{collapse}{string that will be used to concatenate multiple elements
 obtained by splitting \code{string} to one string.}
-
-\item{stirng}{A character.}
+}
+\value{
+A character vector of all proper subsets (superior coalitions) of
+the parties in \code{string}.
 }
 \description{
 Extract superior coalitions from coalition string or vector

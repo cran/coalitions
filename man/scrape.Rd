@@ -9,14 +9,13 @@
 \usage{
 scrape_wahlrecht(
   address = "https://www.wahlrecht.de/umfragen/emnid.htm",
-  parties = c("CDU", "SPD", "GRUENE", "FDP", "LINKE", "PIRATEN", "FW", "AFD",
+  parties = c("CDU", "SPD", "GRUENE", "FDP", "LINKE", "PIRATEN", "AFD", "BSW",
     "SONSTIGE")
 )
 
 scrape_by(
   address = "https://www.wahlrecht.de/umfragen/landtage/bayern.htm",
-  parties = c("CSU", "SPD", "GRUENE", "FDP", "LINKE", "PIRATEN", "FW", "AFD",
-    "SONSTIGE")
+  parties = c("CSU", "SPD", "GRUENE", "FDP", "LINKE", "PIRATEN", "FW", "AFD", "SONSTIGE")
 )
 
 scrape_rp(
@@ -27,7 +26,7 @@ scrape_rp(
 
 scrape_ltw(
   address = "https://www.wahlrecht.de/umfragen/landtage/niedersachsen.htm",
-  parties = c("CDU", "SPD", "GRUENE", "FDP", "LINKE", "PIRATEN", "FW", "AFD",
+  parties = c("CDU", "SPD", "GRUENE", "FDP", "LINKE", "PIRATEN", "FW", "AFD", "BSW",
     "SONSTIGE"),
   ind_row_remove = -c(1:2)
 )
@@ -39,20 +38,20 @@ scrape_ltw(
 
 \item{ind_row_remove}{Negative vector of rows that will be skipped at the beginning.}
 }
+\value{
+A tibble with one row per survey date and columns for date,
+respondents, and one column per party containing the percentage of votes.
+}
 \description{
 Scrapes survey tables and performs sanitation to output tidy data
 }
 \examples{
-\dontrun{
+\donttest{
 library(coalitions)
 library(dplyr)
-# select a polling agency from .pollster_df that should be scraped ...
-coalitions:::.pollster_df
-# ... here we choose Forsa
-address <- coalitions:::.pollster_df \%>\% filter(pollster == "forsa") \%>\% pull(address)
-scrape_wahlrecht(address = address) \%>\% slice(1:5)
+scrape_wahlrecht() \%>\% slice(1:5)
 }
-\dontrun{
+\donttest{
 # Niedersachsen
 scrape_ltw() \%>\% slice(1:5)
 # Hessen

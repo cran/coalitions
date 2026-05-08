@@ -24,6 +24,10 @@ need to correspond to the names in \code{majority_df}.}
 
 \item{collapse}{Character string passed to \code{base::paste}.}
 }
+\value{
+A data frame with one column per coalition. Each column is logical
+indicating whether the coalition obtained a majority in each simulation row.
+}
 \description{
 Do coalitions have a majority
 }
@@ -32,7 +36,7 @@ library(coalitions)
 library(dplyr)
 library(purrr)
 # get the latest survey for a sample of German federal election polls
-surveys <- get_latest(surveys_sample)
+surveys <- get_latest(surveys_sample) \%>\% ungroup() \%>\% slice(1)
 # check for majorities of two coalitions
 coals <- list(c("cdu", "fdp"),
               c("spd", "left", "greens"))
